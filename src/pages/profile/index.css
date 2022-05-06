@@ -1,0 +1,6 @@
+.overlap {
+    position: relative;
+    bottom: 70px;
+    left: 30px;
+    z-index: 5;
+}

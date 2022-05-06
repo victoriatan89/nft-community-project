@@ -1,0 +1,14 @@
+.overlap {
+    position: relative;
+    bottom: 70px;
+    left: 30px;
+    z-index: 5;
+}
+
+.form-control {
+    border: solid 1px #383838;
+}
+
+input {
+    color-scheme: dark;
+}
