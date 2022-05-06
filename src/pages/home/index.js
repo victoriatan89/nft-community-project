@@ -37,40 +37,39 @@ const Home = () => {
         getRankings();
         getMostRecentPosts();
         getMostRecentUsers();
-        getPostsByUserId(profile._id);
-    }, []);
+        if (profile) {
+            getPostsByUserId(profile._id);
+        }
+    }, [profile]);
     return (
         <div>
             <Hero/>
             <div className="container mt-4 ps-5 pe-5">
-                <h3 className="text-center fw-bold mb-5">Top collections over last 7 days</h3>
-                <RankingList collections={collections}/>
-                <div className="row mb-5">
-                    <div className="col-12 col-lg-8 col-xxl-9">
-                        <h3 className="text-center fw-bold mt-5 mb-5">Most recent posts</h3>
-                        <div className="list-group">
-                            {
-                                posts && posts.map && posts.map(post => {
-                                    return (
-                                        <Link className="list-group-item"
-                                              to={`/details/${post.slug}/${post.tokenAddress}?tab=community`}
-                                              style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                                            <PostItem post={post}/>
-                                        </Link>
-                                    );
-                                })
-                            }
-                        </div>
-                    </div>
-                    <div className="d-none d-lg-block col-lg-4 col-xxl-3">
-                        <div>
-                            <h3 className="text-center fw-bold mt-5 mb-5">Recently joined</h3>
-                            <UserList users={users}/>
-                        </div>
-                    </div>
-                </div>
                 <SecureContent>
-                    <h3 className="text-center fw-bold mt-5 mb-5">Your recent posts</h3>
+                    {
+                        profile && profile.role === 'investor' &&
+                        <div className="mb-5">
+                            <h3 className="text-center fw-bold mb-5">Top collections over last 7 days</h3>
+                            <RankingList collections={collections}/>
+                        </div>
+                    }
+                    {
+                        profile && profile.role === 'beginner' &&
+                        <div className="mb-5">
+                            <h3 className="text-center fw-bold mb-5">NFT tutorial</h3>
+                            <div className="d-flex justify-content-around">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/It3HU6ROTKs"
+                                        title="YouTube video player" frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen/>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/YBTdDfRmcrI"
+                                        title="YouTube video player" frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen/>
+                            </div>
+                        </div>
+                    }
+                    <h3 className="text-center fw-bold mb-5">Your recent posts</h3>
                     <div className="list-group">
                         {
                             myPosts && myPosts.map && myPosts.map(post => {
@@ -92,6 +91,30 @@ const Home = () => {
                         }
                     </div>
                 </SecureContent>
+                <div className="row mb-5">
+                    <div className="col-12 col-lg-8 col-xxl-9">
+                        <h3 className="text-center fw-bold mb-5">Most recent posts</h3>
+                        <div className="list-group">
+                            {
+                                posts && posts.map && posts.map(post => {
+                                    return (
+                                        <Link className="list-group-item"
+                                              to={`/details/${post.slug}/${post.tokenAddress}?tab=community`}
+                                              style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                                            <PostItem post={post}/>
+                                        </Link>
+                                    );
+                                })
+                            }
+                        </div>
+                    </div>
+                    <div className="d-none d-lg-block col-lg-4 col-xxl-3">
+                        <div>
+                            <h3 className="text-center fw-bold mb-5">Recently joined</h3>
+                            <UserList users={users}/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
